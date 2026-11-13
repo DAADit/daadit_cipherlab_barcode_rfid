@@ -9,7 +9,7 @@
                 <t t-if="rs38.enabled">
                     <p class="small my-2">Selecteer eerst de juiste locatie. Scan SGTIN-96-tags en klik op Verwerk. Pas daarna de Odoo-telling toe.</p>
                     <label class="form-label small" for="daadit_rs38_input">RFID-scannerinvoer</label>
-                    <textarea id="daadit_rs38_input" t-ref="rs38Input" class="form-control font-monospace" rows="1" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="none" placeholder="Tik hier en druk op de scannerknop" t-on-input.stop="rs38OnInput" t-on-keydown="rs38OnKeydown" t-att-disabled="rs38.busy"/>
+                    <textarea id="daadit_rs38_input" t-ref="rs38Input" class="form-control font-monospace" rows="1" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text" placeholder="Tik hier en druk op de scannerknop" t-on-input.stop="rs38OnInput" t-on-keydown="rs38OnKeydown" t-att-disabled="rs38.busy"/>
                     <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
                         <button type="button" class="btn btn-primary" t-on-click="rs38Process" t-att-disabled="rs38.busy">Verwerk EPC's</button>
                         <button type="button" class="btn btn-secondary" t-on-click="rs38Focus" t-att-disabled="rs38.busy">Scanner activeren</button>

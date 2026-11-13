@@ -37,7 +37,8 @@ Er zijn geen extra Python-pakketten, servers, IoT-boxen of API-sleutels nodig.
    Geen TID, RSSI, PC/CRC-woorden, tijdstempels of decoratieve prefixes/suffixes.
 4. Gebruik Chrome/PWA. Tik expliciet in het RFID-invoerveld voordat je de trigger indrukt.
    Als Android de invoer niet aflevert: controleer de firmware/APK en probeer eerst
-   twee tags in een tekstveld. De module stuurt de radio niet zelf aan.
+   twee tags in een tekstveld. Het invoerveld gebruikt Android-tekstinvoer; het
+   schermtoetsenbord kan verschijnen. De module stuurt de radio niet zelf aan.
 5. Iedere fysieke eenheid heeft een unieke **SGTIN-96**-identiteit. Productbarcodes
    moeten overeenkomen met de gedecodeerde GTIN-14. Gebruik voorraadtracking en
    passende GS1-configuratie volgens Odoo. Serienummertracking is optioneel; bij
