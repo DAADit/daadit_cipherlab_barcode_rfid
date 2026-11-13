@@ -1,8 +1,8 @@
 """Standalone structure checks, not an Odoo installation test."""
+
 import ast
 from pathlib import Path
 import xml.etree.ElementTree as ET
-
 
 ROOT = Path(__file__).resolve().parents[1]
 manifest = ast.literal_eval((ROOT / "__manifest__.py").read_text())

@@ -13,7 +13,11 @@ class StockMoveLine(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             if vals.get("lot_name"):
-                company = self.env["res.company"].browse(vals.get("company_id")) if vals.get("company_id") else self.env.company
+                company = (
+                    self.env["res.company"].browse(vals.get("company_id"))
+                    if vals.get("company_id")
+                    else self.env.company
+                )
                 vals["lot_name"] = clean_tracking_number(company, vals["lot_name"])
         return super().create(vals_list)
 

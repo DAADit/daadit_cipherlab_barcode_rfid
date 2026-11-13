@@ -8,7 +8,9 @@ class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
     cipherlab_rfid_prefix = fields.Char(related="company_id.cipherlab_rfid_prefix", readonly=False)
-    cipherlab_rfid_length = fields.Integer(related="company_id.cipherlab_rfid_length", readonly=False)
+    cipherlab_rfid_length = fields.Integer(
+        related="company_id.cipherlab_rfid_length", readonly=False
+    )
     cipherlab_rfid_one_tag_per_scan = fields.Boolean(
         related="company_id.cipherlab_rfid_one_tag_per_scan", readonly=False
     )

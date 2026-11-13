@@ -6,6 +6,7 @@
 What counts as a tag is set per company (Inventory settings): a prefix and,
 optionally, the total length. Nothing tag-specific is fixed in code.
 """
+
 import re
 
 # Characters a reader may put around a tag: separators and whitespace.

@@ -42,23 +42,27 @@ class StockLot(models.Model):
             if not is_rfid_tag(company, lot.name):
                 continue
             other = (self._cipherlab_rfid_search(lot.name, company.id) - lot).filtered(
-                lambda l: l.product_id != lot.product_id
+                lambda other_lot: other_lot.product_id != lot.product_id
             )[:1]
             if other:
-                raise ValidationError(self.env._(
-                    "RFID tag %(tag)s is already linked to %(product)s. "
-                    "Use a new tag for %(new_product)s.",
-                    tag=lot.name,
-                    product=other.product_id.display_name,
-                    new_product=lot.product_id.display_name,
-                ))
+                raise ValidationError(
+                    self.env._(
+                        "RFID tag %(tag)s is already linked to %(product)s. "
+                        "Use a new tag for %(new_product)s.",
+                        tag=lot.name,
+                        product=other.product_id.display_name,
+                        new_product=lot.product_id.display_name,
+                    )
+                )
 
     @api.model
     def cipherlab_rfid_config(self, company_id=False):
         """RFID settings of the operation's company, for the Barcode app."""
         company = self._cipherlab_rfid_company(company_id)
         return {
-            "tag_pattern": tag_regex_source(company.cipherlab_rfid_prefix, company.cipherlab_rfid_length),
+            "tag_pattern": tag_regex_source(
+                company.cipherlab_rfid_prefix, company.cipherlab_rfid_length
+            ),
             "one_tag_per_product_scan": company.cipherlab_rfid_one_tag_per_scan,
             "block_foreign_tags": company.cipherlab_rfid_block_foreign,
             "capture_text_input": company.cipherlab_rfid_capture_text,
