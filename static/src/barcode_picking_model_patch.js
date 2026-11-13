@@ -36,6 +36,7 @@ patch(BarcodePickingModel.prototype, {
                         blockForeignTags: config.block_foreign_tags !== false,
                         captureTextInput: config.capture_text_input !== false,
                         prefix: config.prefix || "",
+                        prefixes: (config.prefixes || [config.prefix]).filter(Boolean),
                         length: config.length || 0,
                         regex: compilePattern(config.tag_pattern),
                     };
@@ -69,26 +70,50 @@ patch(BarcodePickingModel.prototype, {
      * out; whatever remains between them is kept as its own token (other tags).
      */
     _clSplitGlued(token) {
-        const prefix = this._clRfidConfig?.prefix;
+        const prefixes = this._clRfidConfig?.prefixes || [];
         const length = this._clRfidConfig?.length || 0;
         const upper = token.toUpperCase();
-        if (!prefix || length <= prefix.length || upper.length <= length || !/^[0-9A-F]+$/.test(upper)) {
+        if (!prefixes.length || !/^[0-9A-F]{21,}$/.test(upper)) {
             return [token];
         }
-        const re = new RegExp(prefix + "[0-9A-F]{" + (length - prefix.length) + "}", "g");
         const parts = [];
-        let last = 0;
-        for (const m of upper.matchAll(re)) {
-            if (m.index > last) {
-                parts.push(upper.slice(last, m.index));
+        if (length > 0) {
+            // Fixed length: cut out every occurrence of "prefix + rest".
+            if (upper.length <= length) {
+                return [token];
             }
-            parts.push(m[0]);
-            last = m.index + m[0].length;
+            const alternatives = prefixes
+                .filter((p) => length > p.length)
+                .map((p) => p + "[0-9A-F]{" + (length - p.length) + "}");
+            if (!alternatives.length) {
+                return [token];
+            }
+            const re = new RegExp("(?:" + alternatives.join("|") + ")", "g");
+            let last = 0;
+            for (const m of upper.matchAll(re)) {
+                if (m.index > last) {
+                    parts.push(upper.slice(last, m.index));
+                }
+                parts.push(m[0]);
+                last = m.index + m[0].length;
+            }
+            if (last < upper.length) {
+                parts.push(upper.slice(last));
+            }
+            return parts.length ? parts : [token];
         }
-        if (last < upper.length) {
-            parts.push(upper.slice(last));
+        // Variable length: a new tag starts where a prefix appears, once the
+        // current piece is long enough to be a tag itself (20 hex characters).
+        // Mixed-length tags are best separated by the reader (End Character ";").
+        let start = 0;
+        for (let i = 20; i < upper.length; i++) {
+            if (i - start >= 20 && prefixes.some((p) => upper.startsWith(p, i))) {
+                parts.push(upper.slice(start, i));
+                start = i;
+            }
         }
-        return parts.length ? parts : [token];
+        parts.push(upper.slice(start));
+        return parts;
     },
 
     _clNormalize(token) {
@@ -123,12 +148,18 @@ patch(BarcodePickingModel.prototype, {
         }
     },
 
+    _clIsDelivery() {
+        return this.record?.picking_type_code === "outgoing";
+    },
+
     /**
      * Deliveries work with tags that are already serial numbers, so several tags
-     * may be read at once. Receipts link new tags to items: one tag at a time.
+     * may be read at once. Receipts link new tags to items: one tag at a time,
+     * unless "one tag per product scan" is switched off; then every tag read in
+     * one trigger press becomes a serial number of the selected product line.
      */
     _clRfidAllowsMultipleTags() {
-        return this.record?.picking_type_code === "outgoing";
+        return this._clIsDelivery() || this._clRfidConfig?.oneTagPerProductScan === false;
     },
 
     /** The tag is already scanned in this operation. */
@@ -308,7 +339,7 @@ patch(BarcodePickingModel.prototype, {
                 { type: "danger" }
             );
         }
-        if (this._clRfidAllowsMultipleTags()) {
+        if (this._clIsDelivery()) {
             // A delivery never creates tags, and only takes tags of its own products.
             if (!lookup.exists) {
                 return this._clRefuseDeliveryTag(barcode, "unknown");

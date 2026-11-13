@@ -12,7 +12,7 @@
                     <div class="content-group">
                         <div class="row mt8">
                             <label for="cipherlab_rfid_prefix" class="col-lg-4 o_light_label"/>
-                            <field name="cipherlab_rfid_prefix" placeholder="e.g. 3034"/>
+                            <field name="cipherlab_rfid_prefix" placeholder="e.g. 3034 or 3034,6064"/>
                         </div>
                         <div class="row mt8">
                             <label for="cipherlab_rfid_length" class="col-lg-4 o_light_label"/>

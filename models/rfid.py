@@ -3,8 +3,8 @@
 
 """Shared helpers for RFID tags used as serial numbers.
 
-What counts as a tag is set per company (Inventory settings): a prefix and,
-optionally, the total length. Nothing tag-specific is fixed in code.
+What counts as a tag is set per company (Inventory settings): one or more
+prefixes and, optionally, the total length. Nothing tag-specific is fixed in code.
 """
 
 import re
@@ -13,14 +13,22 @@ import re
 _STRIP_CHARS = " \t\r\n;,"
 
 
+def tag_prefixes(prefix):
+    """The configured prefixes, upper case: one or more, separated by commas or spaces."""
+    return [part.upper() for part in re.split(r"[,\s]+", prefix or "") if part]
+
+
 def tag_regex_source(prefix, length):
-    """Regular expression for tags: the prefix followed by hex characters."""
-    prefix = (prefix or "").strip().upper()
-    if not prefix:
+    """Regular expression for tags: one of the prefixes followed by hex characters."""
+    prefixes = tag_prefixes(prefix)
+    if not prefixes:
         return False
-    rest = (length or 0) - len(prefix)
-    body = "[0-9A-F]{%d}" % rest if rest > 0 else "[0-9A-F]+"
-    return "^" + re.escape(prefix) + body + "$"
+    alternatives = []
+    for item in prefixes:
+        rest = (length or 0) - len(item)
+        body = "[0-9A-F]{%d}" % rest if rest > 0 else "[0-9A-F]+"
+        alternatives.append(re.escape(item) + body)
+    return "^(?:" + "|".join(alternatives) + ")$"
 
 
 def get_tag_regex(company):

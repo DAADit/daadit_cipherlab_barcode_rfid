@@ -52,14 +52,18 @@ no API keys. Reload the Barcode page fully after installing or upgrading.
 
 Per company, under **Inventory ‣ Settings ‣ Barcode ‣ RFID tags as serial numbers**:
 
-- **RFID tag prefix**: the first characters of your tags (empty = module off).
+- **RFID tag prefix**: the first characters of your tags; several prefixes separated by
+  commas, e.g. `3034,6064` (empty = module off).
 - **RFID tag length**: total length including the prefix (0 = any length; glued tags
   can then not be cut apart, so configure a separator on the reader).
-- **One tag per product scan**: after a linked tag, scan a product again first.
+- **One tag per product scan**: after a linked tag, scan a product again first. Switched
+  off, all tags read in one trigger press become serial numbers of the selected line.
 - **Refuse other RFID tags**: refuse 20+ character hex codes without the prefix.
 - **Read text from RFID apps**: show the RFID field on handhelds.
 
 ## Device setup (CipherLab)
+
+Dutch step-by-step guide for warehouse staff: [docs/APPARAAT_INSTELLEN.md](docs/APPARAAT_INSTELLEN.md).
 
 1. Install **Multi-Tag Output** from CipherLab. In Android, allow its notification
    permission and, on Android 13+, *Allow restricted settings* (Settings ‣ Apps ‣

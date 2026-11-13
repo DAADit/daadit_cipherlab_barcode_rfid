@@ -103,3 +103,15 @@ class TestCipherlabBarcodeRfid(TransactionCase):
         self.env["stock.lot"].create(
             {"name": "be7100000000000000018ed9", "product_id": self.product_b.id}
         )
+
+    def test_several_prefixes_and_any_length(self):
+        self.env.company.write({"cipherlab_rfid_prefix": "6064, 0111", "cipherlab_rfid_length": 0})
+        Lot = self.env["stock.lot"]
+        config = Lot.cipherlab_rfid_config(self.env.company.id)
+        self.assertEqual(config["prefixes"], ["6064", "0111"])
+        short = Lot.create({"name": "606407730000000001598254", "product_id": self.product_a.id})
+        long = Lot.create(
+            {"name": "01110500000000000000167183000300039ff03;", "product_id": self.product_a.id}
+        )
+        self.assertEqual(short.name, "606407730000000001598254")
+        self.assertEqual(long.name, "01110500000000000000167183000300039FF03")

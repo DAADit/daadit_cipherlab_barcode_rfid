@@ -1,5 +1,14 @@
 # Changelog
 
+## 19.0.1.1.0 — 2026-11-13
+
+- The tag prefix setting accepts several prefixes, separated by commas
+  (e.g. `3034,6064`), so tags of more than one family count as own tags.
+- With "One tag per product scan" switched off, several tags read in one
+  trigger press on a receipt all become serial numbers of the selected line.
+- Glued tags of variable length are cut where a configured prefix starts;
+  mixed-length tags are best separated by the reader (End Character `;`).
+
 ## 19.0.1.0.3 — 2026-11-13
 
 - Reverts `virtualkeyboardpolicy="manual"` on the RFID field: it kept the keyboard

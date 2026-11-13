@@ -4,7 +4,7 @@
 from odoo import api, models
 from odoo.exceptions import ValidationError
 
-from .rfid import clean_tracking_number, is_rfid_tag, tag_regex_source
+from .rfid import clean_tracking_number, is_rfid_tag, tag_prefixes, tag_regex_source
 
 
 class StockLot(models.Model):
@@ -66,7 +66,8 @@ class StockLot(models.Model):
             "one_tag_per_product_scan": company.cipherlab_rfid_one_tag_per_scan,
             "block_foreign_tags": company.cipherlab_rfid_block_foreign,
             "capture_text_input": company.cipherlab_rfid_capture_text,
-            "prefix": (company.cipherlab_rfid_prefix or "").strip().upper(),
+            "prefix": ", ".join(tag_prefixes(company.cipherlab_rfid_prefix)),
+            "prefixes": tag_prefixes(company.cipherlab_rfid_prefix),
             "length": company.cipherlab_rfid_length or 0,
         }
 

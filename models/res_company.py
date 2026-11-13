@@ -9,7 +9,8 @@ class ResCompany(models.Model):
 
     cipherlab_rfid_prefix = fields.Char(
         string="RFID tag prefix",
-        help="Scanned codes that start with this prefix, followed by hexadecimal "
+        help="One or more prefixes, separated by commas (e.g. 3034,6064). Scanned codes "
+        "that start with one of them, followed by hexadecimal "
         "characters, are RFID tags and are used as serial numbers in the Barcode app. "
         "Leave empty to switch the RFID handling off.",
     )
