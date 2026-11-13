@@ -88,4 +88,5 @@ edit form of a line), tap the RFID field once and pull the trigger again.
   and on the main screen (the RFID field). No new endpoints or access rights.
 - Tests: `tests/test_rfid.py` (post_install) and `tests/check_module.py` (structure).
 
+License: LGPL-3.0 or later, see [COPYING.LESSER](COPYING.LESSER) and [COPYING](COPYING).
 See [CHANGELOG.md](CHANGELOG.md). Issues and questions: open an issue in this repository.

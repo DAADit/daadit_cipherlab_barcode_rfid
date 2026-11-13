@@ -1,5 +1,5 @@
 # Copyright 2026 DAADit
-# License OPL-1 (https://www.odoo.com/documentation/master/legal/licenses.html).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 
 {
     "name": "DAADit CipherLab Barcode RFID",
@@ -40,7 +40,7 @@ needs its own product scan. With an empty prefix nothing changes.
     "category": "Inventory/Inventory",
     "author": "DAADit",
     "website": "https://www.daadit.group",
-    "license": "OPL-1",
+    "license": "LGPL-3",
     "depends": ["stock_barcode"],
     "data": [
         "views/res_config_settings_views.xml",

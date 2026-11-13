@@ -1,5 +1,5 @@
 # Copyright 2026 DAADit
-# License OPL-1 (https://www.odoo.com/documentation/master/legal/licenses.html).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 
 from odoo import api, models
 from odoo.exceptions import ValidationError
