@@ -23,4 +23,7 @@ jobs:
       - run: python3 tests/check_module.py
   odoo-module:
     uses: DAADit/.github/.github/workflows/odoo-module-ci.yml@v1
+    with:
+      module_name: daadit_barcode_rs38
+      lint_all: true
     secrets: inherit
