@@ -63,7 +63,7 @@ Per company, under **Inventory ‣ Settings ‣ Barcode ‣ RFID tags as serial 
 
 ## Device setup (CipherLab)
 
-Dutch step-by-step guide for warehouse staff: [docs/APPARAAT_INSTELLEN.md](docs/APPARAAT_INSTELLEN.md).
+Dutch step-by-step guide for warehouse staff: [PDF](docs/CipherLab-RFID-Odoo-handleiding.pdf) · [Markdown](docs/APPARAAT_INSTELLEN.md).
 
 1. Install **Multi-Tag Output** from CipherLab. In Android, allow its notification
    permission and, on Android 13+, *Allow restricted settings* (Settings ‣ Apps ‣
