@@ -27,6 +27,9 @@ const EDGE_SEPARATORS = /^[;,\s]+|[;,\s]+$/g;
 // Text without a terminator (e.g. key presses from a normal scanner) is
 // handled once no character arrived for this long.
 const IDLE_MS = 250;
+// Text that may be handed over without a terminator: hexadecimal tags of 20+
+// characters, possibly several, with reader separators in between.
+const TAG_LIKE = /^(?:[0-9A-Fa-f]{20,}[;,\s]*)+$/;
 const REFOCUS_MS = 400;
 
 /**
@@ -58,7 +61,13 @@ export class RfidTextBuffer {
             this.flush();
             return true;
         }
-        this.timer = setTimeout(() => this.flush(), IDLE_MS);
+        // Without a terminator only text that looks like RFID tags is handed over
+        // after the idle time. Anything else (words or suggestions typed by an
+        // on-screen keyboard, e.g. "Den", "Broe") waits for Enter and is never
+        // turned into a serial number by accident.
+        if (TAG_LIKE.test(this.chunks.join(""))) {
+            this.timer = setTimeout(() => this.flush(), IDLE_MS);
+        }
         return false;
     }
 

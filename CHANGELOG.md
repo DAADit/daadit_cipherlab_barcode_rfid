@@ -1,5 +1,12 @@
 # Changelog
 
+## 19.0.1.0.2 — 2026-11-13
+
+- Text in the RFID field that does not look like RFID tags (words or
+  suggestions typed by an on-screen keyboard) is no longer handed over as a
+  scan after the idle time; it waits for Enter. Prevents accidental serial
+  numbers such as keyboard suggestions.
+
 ## 19.0.1.0.1 — 2026-11-13
 
 - RFID field asks the browser not to raise the on-screen keyboard
