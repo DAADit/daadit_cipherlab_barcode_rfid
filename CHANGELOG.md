@@ -1,5 +1,11 @@
 # Changelog
 
+## 19.0.1.0.3 — 2026-11-13
+
+- Reverts `virtualkeyboardpolicy="manual"` on the RFID field: it kept the keyboard
+  down but also blocked the reader app's text (verified on the RS36). The on-screen
+  keyboard is handled on the device with the CipherLab Null Keyboard.
+
 ## 19.0.1.0.2 — 2026-11-13
 
 - Text in the RFID field that does not look like RFID tags (words or

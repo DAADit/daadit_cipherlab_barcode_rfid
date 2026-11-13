@@ -69,11 +69,11 @@ Per company, under **Inventory ‣ Settings ‣ Barcode ‣ RFID tags as serial 
    End Character **Enter** or `;` (Odoo's documentation uses `;`; both work).
 3. Use the Barcode app in **Chrome**, as a PWA, or in the Odoo Android app: all three
    receive the tags (verified on the RS36).
-4. The RFID field asks the browser not to raise the on-screen keyboard
-   (`virtualkeyboardpolicy="manual"`). If a keyboard still appears, set the
-   **CipherLab Null Keyboard** as the default keyboard. The field deliberately has no
-   `inputmode="none"`: with that attribute Chromium gives the field no input
-   connection and the reader app cannot type into it.
+4. Set the **CipherLab Null Keyboard** as the default keyboard (Settings ‣ System ‣
+   Languages & input ‣ On-screen keyboard), otherwise the regular keyboard opens on the
+   RFID field and its suggestions can end up in the field. The field deliberately has
+   neither `inputmode="none"` nor `virtualkeyboardpolicy="manual"`: with either,
+   Chromium gives the field no input connection and the reader app cannot type into it.
 5. Do not drive or inspect the device with `uiautomator`-based tools while scanning:
    Android then interrupts all accessibility services and Multi-Tag Output exits.
 
