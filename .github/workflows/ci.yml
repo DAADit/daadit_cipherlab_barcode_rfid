@@ -1,5 +1,9 @@
 name: ci
 
+# Static checks only: the module depends on Odoo Enterprise (stock_barcode),
+# which cannot be installed in a public CI runner. Installation and the
+# post_install tests run on the Odoo.sh staging of each deployment.
+
 on:
   push:
     branches: ["19.0"]
@@ -9,21 +13,22 @@ permissions:
   contents: read
 
 jobs:
-  structure:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python3 tests/check_module.py
-      - run: for f in static/src/*.js; do node --check "$f"; done
-  odoo-module:
-    uses: DAADit/.github/.github/workflows/odoo-module-ci.yml@v1
-    with:
-      module_name: daadit_cipherlab_barcode_rfid
-      lint_all: true
-    secrets: inherit
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Structure (manifest, assets, data, XML, Python syntax)
+        run: python3 tests/check_module.py
+      - name: Python lint (flake8, DAADit rules)
+        run: |
+          python3 -m pip install -q flake8
+          python3 -m flake8 --max-line-length=100 --exclude=.git \
+            --per-file-ignores='__init__.py:F401,E402 __manifest__.py:E501' .
+      - name: JavaScript syntax
+        run: for f in static/src/*.js; do node --check "$f"; done
