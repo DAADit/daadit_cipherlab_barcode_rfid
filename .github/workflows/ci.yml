@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  frontend:
+  structure:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,11 +19,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: npm test
       - run: python3 tests/check_module.py
+      - run: for f in static/src/*.js; do node --check "$f"; done
   odoo-module:
     uses: DAADit/.github/.github/workflows/odoo-module-ci.yml@v1
     with:
-      module_name: daadit_barcode_rs38
+      module_name: daadit_cipherlab_barcode_rfid
       lint_all: true
     secrets: inherit

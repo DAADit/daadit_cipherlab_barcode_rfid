@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.daadit.cipherlab.barcode.rfid</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock_barcode.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='barcode_setting_container']" position="inside">
+                <setting id="cipherlab_rfid_serials"
+                         string="RFID tags as serial numbers"
+                         help="Scanned codes with this prefix are used as serial numbers in the Barcode app. Leave the prefix empty to switch this off.">
+                    <div class="content-group">
+                        <div class="row mt8">
+                            <label for="cipherlab_rfid_prefix" class="col-lg-4 o_light_label"/>
+                            <field name="cipherlab_rfid_prefix" placeholder="e.g. 3034"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="cipherlab_rfid_length" class="col-lg-4 o_light_label"/>
+                            <field name="cipherlab_rfid_length"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="cipherlab_rfid_one_tag_per_scan" class="col-lg-4 o_light_label"/>
+                            <field name="cipherlab_rfid_one_tag_per_scan"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="cipherlab_rfid_block_foreign" class="col-lg-4 o_light_label"/>
+                            <field name="cipherlab_rfid_block_foreign"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="cipherlab_rfid_capture_text" class="col-lg-4 o_light_label"/>
+                            <field name="cipherlab_rfid_capture_text"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

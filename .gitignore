@@ -1,6 +1,4 @@
 __pycache__/
 *.pyc
-node_modules/
 .DS_Store
-.env
-coverage/
+node_modules/

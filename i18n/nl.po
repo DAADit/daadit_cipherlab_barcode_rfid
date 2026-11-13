@@ -1,0 +1,197 @@
+# Dutch translation of daadit_cipherlab_barcode_rfid
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: nl\n"
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(count)s RFID tags were read at once. Hold the reader against one item and scan again."
+msgstr "%(count)s RFID-tags tegelijk gelezen. Houd de lezer tegen één artikel en scan opnieuw."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "Scan or select the item first, then scan the RFID tag."
+msgstr "Scan of kies eerst het artikel, scan daarna de RFID-tag."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "RFID tag %(tag)s is already used in this operation for %(product)s."
+msgstr "RFID-tag %(tag)s is in deze ontvangst al gebruikt voor %(product)s."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "RFID tag %(tag)s is already linked to %(product)s. Use a new tag."
+msgstr "RFID-tag %(tag)s hangt al aan %(product)s. Pak een nieuwe tag."
+
+#. module: daadit_cipherlab_barcode_rfid
+#: code:addons/daadit_cipherlab_barcode_rfid/models/stock_lot.py:0
+msgid "RFID tag %(tag)s is already linked to %(product)s. Use a new tag for %(new_product)s."
+msgstr "RFID-tag %(tag)s hangt al aan %(product)s. Gebruik een nieuwe tag voor %(new_product)s."
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_prefix
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_prefix
+msgid "RFID tag prefix"
+msgstr "Voorvoegsel RFID-tag"
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_length
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_length
+msgid "RFID tag length"
+msgstr "Lengte RFID-tag"
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_one_tag_per_scan
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_one_tag_per_scan
+msgid "One tag per product scan"
+msgstr "Eén tag per productscan"
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model_terms:ir.ui.view,arch_db:daadit_cipherlab_barcode_rfid.res_config_settings_view_form
+msgid "RFID tags as serial numbers"
+msgstr "RFID-tags als serienummer"
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model_terms:ir.ui.view,arch_db:daadit_cipherlab_barcode_rfid.res_config_settings_view_form
+msgid "Scanned codes with this prefix are used as serial numbers in the Barcode app. Leave the prefix empty to switch this off."
+msgstr "Gescande codes met dit voorvoegsel worden in de Barcode-app als serienummer gebruikt. Laat het voorvoegsel leeg om dit uit te zetten."
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,help:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_prefix
+#: model:ir.model.fields,help:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_prefix
+msgid "Scanned codes that start with this prefix, followed by hexadecimal characters, are RFID tags and are used as serial numbers in the Barcode app. Leave empty to switch the RFID handling off."
+msgstr "Gescande codes die met dit voorvoegsel beginnen, gevolgd door hexadecimale tekens, zijn RFID-tags en worden in de Barcode-app als serienummer gebruikt. Leeg laten om de RFID-verwerking uit te zetten."
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,help:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_length
+#: model:ir.model.fields,help:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_length
+msgid "Total number of characters of a tag, prefix included. 0 accepts any length."
+msgstr "Totaal aantal tekens van een tag, inclusief voorvoegsel. 0 accepteert elke lengte."
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,help:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_one_tag_per_scan
+#: model:ir.model.fields,help:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_one_tag_per_scan
+msgid "After a tag is linked, the next tag needs a new product scan or line selection. Switch off to scan several tags in a row for the same product."
+msgstr "Na het koppelen van een tag moet eerst opnieuw een artikel gescand of gekozen worden. Zet uit om meerdere tags achter elkaar voor hetzelfde artikel te scannen."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(code)s is not one of our RFID tags (they start with %(prefix)s). Hold the reader against the item's own tag and scan again."
+msgstr "%(code)s is geen RFID-tag van ons (die beginnen met %(prefix)s). Houd de lezer tegen de tag van dit artikel en scan opnieuw."
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_block_foreign
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_block_foreign
+msgid "Refuse other RFID tags"
+msgstr "Andere RFID-tags weigeren"
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,help:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_block_foreign
+#: model:ir.model.fields,help:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_block_foreign
+msgid "Refuse scanned codes that look like an RFID tag (24 or 32 hexadecimal characters) but do not start with the prefix, e.g. tags of neighbouring goods or of a supplier. Without this, Odoo would use them as a new serial number."
+msgstr "Weiger gescande codes die eruitzien als een RFID-tag (24 of 32 hexadecimale tekens) maar niet met het voorvoegsel beginnen, bijvoorbeeld tags van goederen ernaast of van een leverancier. Anders gebruikt Odoo ze als nieuw serienummer."
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_capture_text
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_capture_text
+msgid "Read text from RFID apps"
+msgstr "Tekst uit RFID-apps lezen"
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,help:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_capture_text
+#: model:ir.model.fields,help:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_capture_text
+msgid "Some RFID reader apps on handhelds write the tag as text into the active field instead of sending key presses. With this on, the Barcode app on a handheld keeps an invisible field ready that receives that text as a scan."
+msgstr "Sommige RFID-apps op handhelds schrijven de tag als tekst in het actieve veld in plaats van toetsaanslagen te sturen. Met deze instelling houdt de Barcode-app op een handheld een onzichtbaar veld klaar dat die tekst als scan ontvangt."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(count)s RFID tags read, %(added)s added."
+msgstr "%(count)s RFID-tags gelezen, %(added)s toegevoegd."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(count)s already scanned."
+msgstr "%(count)s al gescand."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(count)s other tags ignored."
+msgstr "%(count)s andere tags genegeerd."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "RFID tag %(tag)s is unknown: it was never received as a serial number."
+msgstr "RFID-tag %(tag)s is onbekend: deze is nooit als serienummer ontvangen."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(count)s not on this delivery."
+msgstr "%(count)s niet op deze levering."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(count)s above the ordered quantity."
+msgstr "%(count)s boven de bestelde hoeveelheid."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(count)s unknown."
+msgstr "%(count)s onbekend."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "RFID tag %(tag)s belongs to %(product)s, which is not on this delivery."
+msgstr "RFID-tag %(tag)s hoort bij %(product)s, dat niet op deze levering staat."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(product)s is already complete on this delivery: tag %(tag)s was not added."
+msgstr "%(product)s is al compleet op deze levering: tag %(tag)s is niet toegevoegd."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/rfid_text_capture.js:0
+msgid "RFID"
+msgstr "RFID"
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/rfid_text_capture.js:0
+msgid "Tap here, then press the scanner trigger"
+msgstr "Tik hier en druk op de scannerknop"
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/rfid_text_capture.js:0
+msgid "RFID scanner input"
+msgstr "RFID-scannerinvoer"
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/rfid_text_capture.js:0
+msgid "Nothing received yet"
+msgstr "Nog niets ontvangen"
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/rfid_text_capture.js:0
+msgid "Received %(time)s: %(code)s"
+msgstr "Ontvangen %(time)s: %(code)s"
