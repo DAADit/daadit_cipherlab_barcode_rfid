@@ -1,5 +1,12 @@
 # Changelog
 
+## 19.0.1.0.1 — 2026-11-13
+
+- RFID field asks the browser not to raise the on-screen keyboard
+  (`virtualkeyboardpolicy="manual"`); the input connection stays, so the
+  reader app still types into it.
+- Verified that the Odoo Android app receives the tags as well.
+
 ## 19.0.1.0.0 — 2026-11-13
 
 First release under the name `daadit_cipherlab_barcode_rfid` (previously the

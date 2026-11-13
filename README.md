@@ -67,12 +67,13 @@ Per company, under **Inventory ‣ Settings ‣ Barcode ‣ RFID tags as serial 
    After a reset of the app this switch is off again.
 2. In Multi-Tag Output: *Enabled* on, *Exclude Duplicates* on, tag bank **EPC**,
    End Character **Enter** or `;` (Odoo's documentation uses `;`; both work).
-3. Use the Barcode app in **Chrome** or as a PWA on the handheld (Odoo documents the
-   same for CipherLab: the Odoo Android app is not mandatory; we did not verify it).
-4. Set the **CipherLab Null Keyboard** as the default keyboard, so the on-screen
-   keyboard stays away. The RFID field deliberately has no `inputmode="none"`: with
-   that attribute Chromium gives the field no input connection and the reader app
-   cannot type into it.
+3. Use the Barcode app in **Chrome**, as a PWA, or in the Odoo Android app: all three
+   receive the tags (verified on the RS36).
+4. The RFID field asks the browser not to raise the on-screen keyboard
+   (`virtualkeyboardpolicy="manual"`). If a keyboard still appears, set the
+   **CipherLab Null Keyboard** as the default keyboard. The field deliberately has no
+   `inputmode="none"`: with that attribute Chromium gives the field no input
+   connection and the reader app cannot type into it.
 5. Do not drive or inspect the device with `uiautomator`-based tools while scanning:
    Android then interrupts all accessibility services and Multi-Tag Output exits.
 

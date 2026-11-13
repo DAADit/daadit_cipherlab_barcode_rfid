@@ -123,7 +123,10 @@ function buildBar() {
     input.setAttribute("spellcheck", "false");
     // No inputmode="none": with it, Chromium gives the field no input connection
     // and the reader app cannot type into it (verified on the RS36, 13-11-2026).
-    // Use the CipherLab Null Keyboard on the handheld to keep the screen keyboard away.
+    // virtualkeyboardpolicy="manual" keeps the input connection but stops Chromium
+    // from raising the on-screen keyboard by itself (Chrome/WebView 94+); the
+    // CipherLab Null Keyboard on the handheld remains the fallback.
+    input.setAttribute("virtualkeyboardpolicy", "manual");
     input.setAttribute("placeholder", _t("Tap here, then press the scanner trigger"));
     input.setAttribute("aria-label", _t("RFID scanner input"));
     label.htmlFor = input.id = "o_cipherlab_rfid_text_input";
