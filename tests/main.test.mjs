@@ -15,7 +15,7 @@ class Main {
         this.notification = { add: (...args) => this.messages.push(args) };
     }
     onBarcodeScanned(value) { this.standardScan = value; }
-    unblockUI() { this.state.uiBlocked = false; }
+    unblockUI() { this.state.uiBlocked = false; this.renderedCount = this.env.model.count; }
     exit() { this.exited = true; }
     validate() { this.validated = true; }
 }
@@ -70,6 +70,7 @@ test("bridge uses native URI processing, drains model mutex and deduplicates", a
     assert.equal(c.rs38.summary.accepted, 2);
     assert.equal(c.rs38.busy, false);
     assert.equal(c.state.uiBlocked, false);
+    assert.equal(c.renderedCount, 2, "native unblocking refreshes the final child-line quantity");
     await c.rs38Process();
     assert.equal(c.env.model.count, 2);
 });

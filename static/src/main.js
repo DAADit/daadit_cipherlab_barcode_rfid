@@ -145,7 +145,9 @@ patch(MainComponent.prototype, {
         } finally {
             if (this.rs38Alive) {
                 this.rs38.busy = false;
-                this.state.uiBlocked = false;
+                // Native unblockUI forces child line components to render too.
+                // Updating reactive panel state alone leaves their quantities stale.
+                this.unblockUI();
                 this.rs38Refresh();
                 this.rs38Focus();
             }

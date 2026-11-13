@@ -1,7 +1,7 @@
 {
     "name": "DAADit — RS38 RFID Inventory",
     "summary": "Read multiple SGTIN-96 EPCs in the standard Barcode inventory count",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "category": "Inventory/Inventory",
     "author": "DAADit",
     "website": "https://www.daadit.group",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 19.0.1.0.1
+
+- Ververst de Odoo-telregels direct na het verwerken van een EPC-batch.
+- Gevonden tijdens Avontuur-stagingacceptatie: 20 tags werden correct geteld,
+  maar de zichtbare regel bleef zonder extra klik op een tussenstand staan.
+
 ## 19.0.1.0.0
 
 - RS38-scanpaneel in de standaard Barcode-voorraadtelling.
