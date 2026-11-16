@@ -1,5 +1,16 @@
 # Changelog
 
+## 19.0.1.1.1 — 2026-11-16
+
+- Deliveries: a known tag always goes to the line of its own product. With
+  "One tag per product scan" switched off, the line of the first tag of a
+  multi-tag read was used as target for every following tag, and tags of
+  other products were refused as "already linked to …". Found in a delivery
+  test with five tags of three products: only one line was picked.
+- A tapped line of another product no longer blocks a delivery tag.
+- Tags refused as linked to another product are now counted in the summary
+  notification instead of being reported as added.
+
 ## 19.0.1.1.0 — 2026-11-13
 
 - The tag prefix setting accepts several prefixes, separated by commas

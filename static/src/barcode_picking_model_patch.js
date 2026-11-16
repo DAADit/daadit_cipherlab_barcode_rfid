@@ -174,7 +174,7 @@ patch(BarcodePickingModel.prototype, {
      */
     async _clProcessMultipleTags(tags, foreign, options) {
         const newTags = tags.filter((tag) => !this._clRfidTagIsDone(tag));
-        const stats = { unknown: 0, not_in_delivery: 0, complete: 0 };
+        const stats = { unknown: 0, not_in_delivery: 0, complete: 0, conflict: 0 };
         this._clMultiStats = stats;
         for (const tag of newTags) {
             await super.processBarcode(tag, options);
@@ -185,7 +185,7 @@ patch(BarcodePickingModel.prototype, {
             if (this._clMultiStats === stats) {
                 this._clMultiStats = null;
             }
-            const refused = stats.unknown + stats.not_in_delivery + stats.complete;
+            const refused = stats.unknown + stats.not_in_delivery + stats.complete + stats.conflict;
             const parts = [
                 _t("%(count)s RFID tags read, %(added)s added.", {
                     count: tags.length,
@@ -204,6 +204,9 @@ patch(BarcodePickingModel.prototype, {
             }
             if (stats.unknown) {
                 parts.push(_t("%(count)s unknown.", { count: stats.unknown }));
+            }
+            if (stats.conflict) {
+                parts.push(_t("%(count)s linked to another product.", { count: stats.conflict }));
             }
             if (foreign.length) {
                 parts.push(_t("%(count)s other tags ignored.", { count: foreign.length }));
@@ -231,7 +234,7 @@ patch(BarcodePickingModel.prototype, {
         return demand && done >= demand ? "complete" : "";
     },
 
-    /** Refuse a tag on a delivery: counted during a multi-tag read, else notified. */
+    /** Refuse a tag: counted during a multi-tag read, else notified. */
     _clRefuseDeliveryTag(tag, reason, productName) {
         if (this._clMultiStats) {
             this._clMultiStats[reason]++;
@@ -249,6 +252,10 @@ patch(BarcodePickingModel.prototype, {
                 "%(product)s is already complete on this delivery: tag %(tag)s was not added.",
                 { tag, product: productName }
             ),
+            conflict: _t("RFID tag %(tag)s is already linked to %(product)s. Use a new tag.", {
+                tag,
+                product: productName,
+            }),
         };
         return this.notification(messages[reason], { type: "danger" });
     },
@@ -324,22 +331,22 @@ patch(BarcodePickingModel.prototype, {
                 { type: "danger" }
             );
         }
-        const line = this._clRfidTargetLine();
+        const isDelivery = this._clIsDelivery();
+        // On a delivery every tag is already a serial number, so the tag itself
+        // tells which product (and line) it belongs to. The selected or last
+        // scanned line plays no part there: after the first tag of a multi-tag
+        // read Odoo selects that tag's line, and using it as target made every
+        // following tag of another product fail as a conflict.
+        const line = isDelivery ? false : this._clRfidTargetLine();
         const lookup = await this.orm.call("stock.lot", "cipherlab_rfid_lookup", [
             barcode,
             line ? line.product_id.id : false,
             this._getCompanyId() || false,
         ]);
         if (lookup.conflict) {
-            return this.notification(
-                _t("RFID tag %(tag)s is already linked to %(product)s. Use a new tag.", {
-                    tag: barcode,
-                    product: lookup.product_name,
-                }),
-                { type: "danger" }
-            );
+            return this._clRefuseDeliveryTag(barcode, "conflict", lookup.product_name);
         }
-        if (this._clIsDelivery()) {
+        if (isDelivery) {
             // A delivery never creates tags, and only takes tags of its own products.
             if (!lookup.exists) {
                 return this._clRefuseDeliveryTag(barcode, "unknown");
@@ -348,6 +355,14 @@ patch(BarcodePickingModel.prototype, {
             if (refusal) {
                 return this._clRefuseDeliveryTag(barcode, refusal, lookup.product_name);
             }
+            // Let the standard flow find the line of the tag's own product, also
+            // when the operator had tapped a line of another product.
+            if (this.selectedLine && this.selectedLine.product_id.id !== lookup.product_id) {
+                this.selectedLineVirtualId = false;
+            }
+            const result = await super._processBarcode(...arguments);
+            this._clRfidRelease();
+            return result;
         }
         if (lookup.exists && this.useExistingLots && !line) {
             // Known tag (delivery, return): the tag itself tells which product it is.

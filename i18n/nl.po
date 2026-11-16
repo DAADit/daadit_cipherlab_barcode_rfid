@@ -157,6 +157,12 @@ msgstr "%(count)s onbekend."
 #. module: daadit_cipherlab_barcode_rfid
 #. odoo-javascript
 #: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(count)s linked to another product."
+msgstr "%(count)s gekoppeld aan een ander artikel."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
 msgid "RFID tag %(tag)s belongs to %(product)s, which is not on this delivery."
 msgstr "RFID-tag %(tag)s hoort bij %(product)s, dat niet op deze levering staat."
 
