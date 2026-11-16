@@ -84,12 +84,12 @@ class TestCipherlabBarcodeRfid(TransactionCase):
     def test_config_follows_company_settings(self):
         config = self.env["stock.lot"].cipherlab_rfid_config()
         self.assertTrue(config["one_tag_per_product_scan"])
-        self.assertEqual(config["tag_pattern"], "^BE71[0-9A-F]{20}$")
+        self.assertEqual(config["tag_pattern"], "^(?:BE71[0-9A-F]{20})$")
         self.assertTrue(config["block_foreign_tags"])
         self.assertEqual(config["prefix"], "BE71")
         self.env.company.cipherlab_rfid_length = 0
         self.assertEqual(
-            self.env["stock.lot"].cipherlab_rfid_config()["tag_pattern"], "^BE71[0-9A-F]+$"
+            self.env["stock.lot"].cipherlab_rfid_config()["tag_pattern"], "^(?:BE71[0-9A-F]+)$"
         )
 
     def test_without_prefix_nothing_changes(self):
@@ -115,3 +115,28 @@ class TestCipherlabBarcodeRfid(TransactionCase):
         )
         self.assertEqual(short.name, "606407730000000001598254")
         self.assertEqual(long.name, "01110500000000000000167183000300039FF03")
+
+    def test_delivery_mode_default_and_free_stock_at_source(self):
+        Lot = self.env["stock.lot"]
+        config = Lot.cipherlab_rfid_config(self.env.company.id)
+        self.assertEqual(config["delivery_mode"], "strict")
+        warehouse = self.env["stock.warehouse"].search(
+            [("company_id", "=", self.env.company.id)], limit=1
+        )
+        stock = warehouse.lot_stock_id
+        lot = Lot.create({"name": self.tag, "product_id": self.product_a.id})
+        Quant = self.env["stock.quant"]
+        Quant._update_available_quantity(self.product_a, stock, 1, lot_id=lot)
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": warehouse.out_type_id.id,
+                "location_id": stock.id,
+                "location_dest_id": self.env.ref("stock.stock_location_customers").id,
+            }
+        )
+        lookup = Lot.cipherlab_rfid_lookup(self.tag, False, self.env.company.id, picking.id)
+        self.assertEqual(lookup["free_at_source"], 1)
+        # Reserved elsewhere: no longer free for another delivery.
+        Quant._update_reserved_quantity(self.product_a, stock, 1, lot_id=lot)
+        lookup = Lot.cipherlab_rfid_lookup(self.tag, False, self.env.company.id, picking.id)
+        self.assertEqual(lookup["free_at_source"], 0)

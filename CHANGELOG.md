@@ -1,5 +1,18 @@
 # Changelog
 
+## 19.0.1.2.0 — 2026-11-16
+
+- New setting "RFID tags on deliveries" (per company):
+  - **Only tags reserved on the delivery** (default): a tag must be one of the
+    serial numbers reserved on the delivery. A reserved item, such as a rental
+    or project item, is never swapped for another unit of the same product.
+  - **Also free stock at the source location**: another tag of the same product
+    is accepted when that unit lies unreserved at the delivery's source location.
+  - **Any tag** (Odoo standard): Odoo swaps the reserved serial number for the
+    scanned one.
+- Found in a delivery test: tags of the same products that were in the receiving
+  area and reserved for another operation were accepted and swapped in.
+
 ## 19.0.1.1.1 — 2026-11-16
 
 - Deliveries: a known tag always goes to the line of its own product. With

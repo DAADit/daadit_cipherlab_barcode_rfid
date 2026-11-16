@@ -31,6 +31,22 @@ class ResCompany(models.Model):
         "characters) but do not start with the prefix, e.g. tags of neighbouring "
         "goods or of a supplier. Without this, Odoo would use them as a new serial number.",
     )
+    cipherlab_rfid_delivery_mode = fields.Selection(
+        [
+            ("strict", "Only tags reserved on the delivery"),
+            ("available", "Also free stock at the source location"),
+            ("any", "Any tag of a product on the delivery (Odoo standard)"),
+        ],
+        string="RFID tags on deliveries",
+        default="strict",
+        required=True,
+        help="Which tags a delivery accepts. Only reserved tags: a tag must be one of the "
+        "serial numbers reserved on the delivery, so a reserved item (rental, project "
+        "item) is never swapped for another one. Also free stock: another tag of the same "
+        "product is accepted when that item lies free at the source location and is not "
+        "reserved elsewhere. Any tag: Odoo's standard behaviour, which swaps the reserved "
+        "serial number for the scanned one.",
+    )
     cipherlab_rfid_capture_text = fields.Boolean(
         string="Read text from RFID apps",
         default=True,

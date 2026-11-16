@@ -58,6 +58,9 @@ Per company, under **Inventory ‣ Settings ‣ Barcode ‣ RFID tags as serial 
   can then not be cut apart, so configure a separator on the reader).
 - **One tag per product scan**: after a linked tag, scan a product again first. Switched
   off, all tags read in one trigger press become serial numbers of the selected line.
+- **RFID tags on deliveries**: *Only tags reserved on the delivery* (default; reserved
+  items such as rentals are never swapped), *Also free stock at the source location*, or
+  *Any tag* (Odoo's standard swap of the reserved serial number).
 - **Refuse other RFID tags**: refuse 20+ character hex codes without the prefix.
 - **Read text from RFID apps**: show the RFID field on handhelds.
 

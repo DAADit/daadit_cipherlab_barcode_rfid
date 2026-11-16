@@ -23,6 +23,10 @@
                             <field name="cipherlab_rfid_one_tag_per_scan"/>
                         </div>
                         <div class="row mt8">
+                            <label for="cipherlab_rfid_delivery_mode" class="col-lg-4 o_light_label"/>
+                            <field name="cipherlab_rfid_delivery_mode"/>
+                        </div>
+                        <div class="row mt8">
                             <label for="cipherlab_rfid_block_foreign" class="col-lg-4 o_light_label"/>
                             <field name="cipherlab_rfid_block_foreign"/>
                         </div>

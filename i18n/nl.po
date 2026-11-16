@@ -201,3 +201,48 @@ msgstr "Nog niets ontvangen"
 #: code:addons/daadit_cipherlab_barcode_rfid/static/src/rfid_text_capture.js:0
 msgid "Received %(time)s: %(code)s"
 msgstr "Ontvangen %(time)s: %(code)s"
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_company__cipherlab_rfid_delivery_mode
+#: model:ir.model.fields,field_description:daadit_cipherlab_barcode_rfid.field_res_config_settings__cipherlab_rfid_delivery_mode
+msgid "RFID tags on deliveries"
+msgstr "RFID-tags bij leveringen"
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields.selection,name:daadit_cipherlab_barcode_rfid.selection__res_company__cipherlab_rfid_delivery_mode__strict
+msgid "Only tags reserved on the delivery"
+msgstr "Alleen tags die op de levering gereserveerd zijn"
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields.selection,name:daadit_cipherlab_barcode_rfid.selection__res_company__cipherlab_rfid_delivery_mode__available
+msgid "Also free stock at the source location"
+msgstr "Ook vrije voorraad op de vertreklocatie"
+
+#. module: daadit_cipherlab_barcode_rfid
+#: model:ir.model.fields.selection,name:daadit_cipherlab_barcode_rfid.selection__res_company__cipherlab_rfid_delivery_mode__any
+msgid "Any tag of a product on the delivery (Odoo standard)"
+msgstr "Elke tag van een artikel op de levering (Odoo-standaard)"
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(count)s not reserved on this delivery."
+msgstr "%(count)s niet gereserveerd op deze levering."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "%(count)s not free at the source location."
+msgstr "%(count)s niet vrij op de vertreklocatie."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "RFID tag %(tag)s (%(product)s) is not reserved on this delivery: only the reserved items may go."
+msgstr "RFID-tag %(tag)s (%(product)s) is niet gereserveerd op deze levering: alleen de gereserveerde artikelen mogen mee."
+
+#. module: daadit_cipherlab_barcode_rfid
+#. odoo-javascript
+#: code:addons/daadit_cipherlab_barcode_rfid/static/src/barcode_picking_model_patch.js:0
+msgid "RFID tag %(tag)s (%(product)s) is not free at the source location of this delivery."
+msgstr "RFID-tag %(tag)s (%(product)s) ligt niet vrij op de vertreklocatie van deze levering."

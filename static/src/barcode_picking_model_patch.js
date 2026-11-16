@@ -38,6 +38,7 @@ patch(BarcodePickingModel.prototype, {
                         prefix: config.prefix || "",
                         prefixes: (config.prefixes || [config.prefix]).filter(Boolean),
                         length: config.length || 0,
+                        deliveryMode: config.delivery_mode || "strict",
                         regex: compilePattern(config.tag_pattern),
                     };
                     return this._clRfidConfig;
@@ -174,7 +175,14 @@ patch(BarcodePickingModel.prototype, {
      */
     async _clProcessMultipleTags(tags, foreign, options) {
         const newTags = tags.filter((tag) => !this._clRfidTagIsDone(tag));
-        const stats = { unknown: 0, not_in_delivery: 0, complete: 0, conflict: 0 };
+        const stats = {
+            unknown: 0,
+            not_in_delivery: 0,
+            complete: 0,
+            conflict: 0,
+            not_reserved: 0,
+            not_free: 0,
+        };
         this._clMultiStats = stats;
         for (const tag of newTags) {
             await super.processBarcode(tag, options);
@@ -185,7 +193,7 @@ patch(BarcodePickingModel.prototype, {
             if (this._clMultiStats === stats) {
                 this._clMultiStats = null;
             }
-            const refused = stats.unknown + stats.not_in_delivery + stats.complete + stats.conflict;
+            const refused = Object.values(stats).reduce((sum, count) => sum + count, 0);
             const parts = [
                 _t("%(count)s RFID tags read, %(added)s added.", {
                     count: tags.length,
@@ -195,6 +203,12 @@ patch(BarcodePickingModel.prototype, {
             const skipped = tags.length - newTags.length;
             if (skipped) {
                 parts.push(_t("%(count)s already scanned.", { count: skipped }));
+            }
+            if (stats.not_reserved) {
+                parts.push(_t("%(count)s not reserved on this delivery.", { count: stats.not_reserved }));
+            }
+            if (stats.not_free) {
+                parts.push(_t("%(count)s not free at the source location.", { count: stats.not_free }));
             }
             if (stats.not_in_delivery) {
                 parts.push(_t("%(count)s not on this delivery.", { count: stats.not_in_delivery }));
@@ -256,6 +270,14 @@ patch(BarcodePickingModel.prototype, {
                 tag,
                 product: productName,
             }),
+            not_reserved: _t(
+                "RFID tag %(tag)s (%(product)s) is not reserved on this delivery: only the reserved items may go.",
+                { tag, product: productName }
+            ),
+            not_free: _t(
+                "RFID tag %(tag)s (%(product)s) is not free at the source location of this delivery.",
+                { tag, product: productName }
+            ),
         };
         return this.notification(messages[reason], { type: "danger" });
     },
@@ -342,6 +364,7 @@ patch(BarcodePickingModel.prototype, {
             barcode,
             line ? line.product_id.id : false,
             this._getCompanyId() || false,
+            isDelivery ? this.record.id : false,
         ]);
         if (lookup.conflict) {
             return this._clRefuseDeliveryTag(barcode, "conflict", lookup.product_name);
@@ -354,6 +377,20 @@ patch(BarcodePickingModel.prototype, {
             const refusal = this._clDeliveryRefusal(lookup.product_id);
             if (refusal) {
                 return this._clRefuseDeliveryTag(barcode, refusal, lookup.product_name);
+            }
+            // Which tags may go (company setting): "strict" only the serial numbers
+            // reserved on this delivery, so a reserved item (rental, project item)
+            // is never swapped; "available" also a free item of the same product at
+            // the source location; "any" Odoo's standard swap.
+            const mode = this._clRfidConfig?.deliveryMode || "strict";
+            const reservedHere = this.currentState.lines.some(
+                (l) => this.getlotName(l) === barcode
+            );
+            if (!reservedHere && mode === "strict") {
+                return this._clRefuseDeliveryTag(barcode, "not_reserved", lookup.product_name);
+            }
+            if (!reservedHere && mode === "available" && !(lookup.free_at_source > 0)) {
+                return this._clRefuseDeliveryTag(barcode, "not_free", lookup.product_name);
             }
             // Let the standard flow find the line of the tag's own product, also
             // when the operator had tapped a line of another product.

@@ -69,23 +69,36 @@ class StockLot(models.Model):
             "prefix": ", ".join(tag_prefixes(company.cipherlab_rfid_prefix)),
             "prefixes": tag_prefixes(company.cipherlab_rfid_prefix),
             "length": company.cipherlab_rfid_length or 0,
+            "delivery_mode": company.cipherlab_rfid_delivery_mode or "strict",
         }
 
     @api.model
-    def cipherlab_rfid_lookup(self, tag, product_id=False, company_id=False):
+    def cipherlab_rfid_lookup(self, tag, product_id=False, company_id=False, picking_id=False):
         """Tell the Barcode app what is known about a tag.
 
         ``exists``: the tag is already a serial number, with its product.
         ``conflict``: it belongs to another product than ``product_id``.
+        ``free_at_source``: with ``picking_id``, the quantity of this serial number
+        that lies unreserved at the operation's source location (or below it).
         """
         company = self._cipherlab_rfid_company(company_id)
         tag = clean_tracking_number(company, tag)
         lot = self._cipherlab_rfid_search(tag, company.id)[:1]
         if not lot:
             return {"exists": False, "conflict": False}
-        return {
+        result = {
             "exists": True,
             "product_id": lot.product_id.id,
             "product_name": lot.product_id.display_name,
             "conflict": bool(product_id) and lot.product_id.id != product_id,
         }
+        if picking_id:
+            picking = self.env["stock.picking"].browse(picking_id)
+            quants = self.env["stock.quant"].search(
+                [
+                    ("lot_id", "=", lot.id),
+                    ("location_id", "child_of", picking.location_id.id),
+                ]
+            )
+            result["free_at_source"] = sum(q.quantity - q.reserved_quantity for q in quants)
+        return result

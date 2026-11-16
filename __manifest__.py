@@ -3,7 +3,7 @@
 
 {
     "name": "DAADit CipherLab Barcode RFID",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.2.0",
     "summary": "RFID tags as serial numbers in the Barcode app, read with CipherLab handhelds (RS35/RS36/RS38) and Multi-Tag Output.",
     "description": """
 RFID tags as serial numbers in the Barcode app (CipherLab)

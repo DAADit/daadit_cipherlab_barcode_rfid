@@ -20,3 +20,6 @@ class ResConfigSettings(models.TransientModel):
     cipherlab_rfid_capture_text = fields.Boolean(
         related="company_id.cipherlab_rfid_capture_text", readonly=False
     )
+    cipherlab_rfid_delivery_mode = fields.Selection(
+        related="company_id.cipherlab_rfid_delivery_mode", readonly=False
+    )
