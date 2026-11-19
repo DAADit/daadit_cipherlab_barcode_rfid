@@ -1,5 +1,11 @@
 # Changelog
 
+## 20.0.1.2.0 — 2026-11-19
+
+- First version for Odoo 20, the same functionality as 19.0.1.2.0. The Python code
+  uses nothing that changed in Odoo 20. The JavaScript patches the Barcode app
+  (stock_barcode, Enterprise); that is verified by the first installation on Odoo 20.
+
 ## 19.0.1.2.0 — 2026-11-16
 
 - New setting "RFID tags on deliveries" (per company):
